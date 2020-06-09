@@ -1,0 +1,29 @@
+{
+  "name": "shreddo",
+  "version": "1.0.0",
+  "description": "Let's Guitar Shred",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erikbeng123/shreddo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erikbeng123/shreddo/issues"
+  },
+  "homepage": "https://github.com/erikbeng123/shreddo#readme",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "prettier": "2.0.5"
+  }
+}
