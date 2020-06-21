@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <body style="padding: 0; margin: 0;">
+    <div id="player"></div>
+    <button id="play-btn">Play</button>
+    <button id="tempo-btn">Set tempo:</button>
+    <input id="tempo" type="number" max="2" min="0.25" step="0.05" />
+    <script>
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      function onYouTubeIframeAPIReady() {
+        const player = new YT.Player("player", {
+          height: "390",
+          width: window.innerWidth,
+          videoId: "v900d5tVw6E",
+          events: {
+            onReady: () => {},
+            onStateChange: () => {},
+          },
+          playerVars: {
+            rel: 0,
+            showinfo: 0,
+            ecver: 2,
+            fs: 0,
+            iv_load_policy: 3,
+            controls: 0,
+          },
+        });
+
+        const btn = document.getElementById("tempo-btn");
+        const input = document.getElementById("tempo");
+        btn.addEventListener("click", () => {
+          const playBackrate = Number(input.value) || player.getPlaybackRate();
+          player.setPlaybackRate(playBackrate);
+        });
+        const play = document.getElementById("play-btn");
+        play.addEventListener("click", () => {
+          console.log(player);
+          player.playVideo();
+        });
+      }
+    </script>
+  </body>
+</html>
