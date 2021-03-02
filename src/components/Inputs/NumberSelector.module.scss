@@ -1,0 +1,59 @@
+.numberSelector {
+  height: 40px;
+  display: flex;
+  border: 1px solid var(--faded-color);
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+  flex-grow: 0;
+}
+
+.numberInput {
+  border: none;
+  text-align: center;
+  width: calc(100% - var(--padding-normal));
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.stepButtons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: calc(var(--padding-normal) / 2);
+  height: 60%;
+  justify-content: space-between;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.stepButton {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  opacity: var(--fade-opacity);
+  transition: var(--transition-time);
+  width: 10px;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  svg {
+    height: 10px;
+
+    path {
+      fill: var(--main-color);
+    }
+  }
+}

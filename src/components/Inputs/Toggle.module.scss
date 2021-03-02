@@ -1,0 +1,29 @@
+.toggle {
+  background: var(--faded-color);
+  height: 30px;
+  width: 56px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-time);
+  box-shadow: var(--box-shadow);
+
+  &.toggled {
+    background: var(--main-color);
+
+    .toggleHandle {
+      transform: translateX(26px);
+    }
+  }
+}
+
+.toggleHandle {
+  background: var(--opposite-text-color);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-left: 2px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition-time);
+}

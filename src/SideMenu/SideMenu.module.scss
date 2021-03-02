@@ -1,0 +1,165 @@
+.sideMenu {
+  background-color: var(--sub-color);
+  height: 100vh;
+  width: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin: 0;
+  font-size: 2.5rem;
+  padding: 0 var(--padding-normal) var(--padding-normal) var(--padding-normal);
+  margin-top: var(--padding-normal);
+  margin-bottom: calc(var(--padding-normal) * 2);
+  opacity: var(--fade-opacity);
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 60%;
+    height: 2px;
+    background: pink;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: var(--padding-normal);
+  }
+}
+
+.songList {
+  padding: 0;
+  margin: 0;
+}
+
+.songLink {
+  color: var(--opposite-text-color);
+  opacity: var(--fade-opacity);
+  padding: calc(var(--padding-normal) / 2) var(--padding-normal);
+  margin-bottom: calc(var(--padding-normal) / 2);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition-duration: var(--transition-time);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    background: var(--opposite-text-color);
+    transform: translateX(-100%);
+    transition-duration: var(--transition-time);
+  }
+
+  &:hover {
+    opacity: 1;
+    box-shadow: var(--box-shadow);
+
+    &::before {
+      transform: translateX(0%);
+    }
+  }
+
+  &.selectedSong {
+    opacity: 1;
+    font-weight: 400;
+    background: var(--main-color);
+    box-shadow: var(--box-shadow);
+
+    &::before {
+      transform: translateX(0%);
+    }
+  }
+}
+
+.bottomButtons {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-normal);
+  margin-top: auto;
+}
+
+.bottomButton {
+  margin-bottom: var(--padding-normal);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  text-decoration: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  padding: 0;
+  cursor: pointer;
+  transition: var(--transition-time);
+
+  &:hover {
+    color: var(--opposite-text-color);
+
+    .bottomIcon {
+      background: var(--control-color);
+    }
+
+    .plus {
+      &::after {
+        background: var(--opposite-text-color);
+      }
+      &::before {
+        background: var(--opposite-text-color);
+      }
+    }
+
+    .settingsCog {
+      fill: var(--opposite-text-color);
+    }
+  }
+}
+
+.bottomIcon {
+  height: 2.5rem;
+  width: 2.5rem;
+  background: var(--text-color);
+  border-radius: 50%;
+  margin-right: var(--padding-normal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition-time);
+}
+
+.plus {
+  position: relative;
+
+  &::after {
+    height: 60%;
+    width: 3px;
+    display: block;
+    content: "";
+    background: var(--sub-color);
+    position: absolute;
+    transition: var(--transition-time);
+  }
+
+  &::before {
+    height: 60%;
+    width: 3px;
+    display: block;
+    content: "";
+    background: var(--sub-color);
+    transform: rotateZ(90deg);
+    position: absolute;
+    transition: var(--transition-time);
+  }
+}
+
+.settingsCog {
+  fill: var(--sub-color);
+  height: 60%;
+  transition: var(--transition-time);
+}

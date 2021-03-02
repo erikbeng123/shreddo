@@ -1,0 +1,92 @@
+.container {
+  background: var(--background-color-sub);
+  box-shadow: var(--box-shadow);
+  margin: calc(var(--padding-normal) * 2) 0;
+  overflow: scroll;
+  width: calc(100vw - 200px - var(--padding-normal) * 4);
+  border-radius: var(--border-radius);
+  height: 400px;
+}
+
+.songContainer {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.sectionBar {
+  width: 100%;
+  height: 30px;
+  background: var(--highlight-color);
+  position: relative;
+  z-index: 100;
+}
+
+.sectionArrow {
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-color: var(--sub-color) transparent transparent transparent;
+  border-width: 30px 12px 0 12px;
+  position: absolute;
+  transform: translateX(-50%);
+
+  &::after {
+    content: "";
+    height: 370px;
+    width: 1px;
+    top: 0;
+    background: var(--sub-color);
+    position: absolute;
+  }
+}
+
+.soundWave {
+  width: 100%;
+  height: 100%;
+  padding: 70px 0;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+.selectedSoundWave {
+  width: 100%;
+  height: 100%;
+  padding: 70px 0;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  background: var(--contrast-color);
+
+  .waveBar {
+    background: var(--background-color);
+  }
+}
+
+.waveBar {
+  width: 10px;
+  background: var(--faded-color);
+  flex-shrink: 0;
+  margin-right: 10px;
+  border-radius: var(--border-radius);
+}
+
+.loopBar {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: var(--main-color);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}

@@ -1,0 +1,82 @@
+.songPlayerContainer {
+  width: 100%;
+  padding: calc(var(--padding-normal) * 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.songTitle {
+  margin: 0;
+  color: var(--main-color);
+  font-size: 8rem;
+  font-weight: 400;
+}
+
+.songInfo {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.songSettings {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--padding-normal);
+}
+
+.playButton {
+  height: 100px;
+  width: 100px;
+  background-color: var(--control-color);
+  box-shadow: var(--box-shadow);
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  padding: 0;
+
+  svg {
+    margin-left: 12px;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.settingColumn {
+  width: 25%;
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--padding-normal);
+  height: 40px;
+  align-items: center;
+}
+
+.settingLabel {
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.tapTempoButton {
+  margin-left: auto;
+  display: block;
+  height: 40px;
+  background-color: var(--highlight-color);
+  width: 140px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--faded-color);
+  cursor: pointer;
+  color: var(--text-color);
+  transition: var(--transition-time);
+
+  &:hover {
+    background: pink;
+  }
+}
