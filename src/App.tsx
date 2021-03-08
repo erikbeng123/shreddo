@@ -3,11 +3,46 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { SideMenu } from "./SideMenu";
 import { SongPlayer } from "./SongPlayer";
-import { SongData } from "./SongPlayer/SongPlayer";
 import { roundToNearestDecimal } from "./utils/number";
+import { createMusicPlayer } from "./audio/MusicPlayer";
+import audioFile from "../test.mp3";
+
+export type SongData = {
+  id: string | null;
+  title: string;
+  artist: string;
+  duration: number;
+  sections: Array<number>;
+  loopStart: number;
+  loopEnd: number;
+  soundData: Array<number>;
+  isLooping: boolean;
+  playbackSpeed: number;
+  isAutoSpeedUpEnabled: boolean;
+  speedUpIncrement: number;
+  speedUpRepetitions: number;
+  isCountInEnabled: boolean;
+  countInBeats: number;
+  countInTempo: number;
+};
+
+export type PlayerSettings = {
+  isPlaying: boolean;
+  volume: number;
+};
+
+type AppState = {
+  songList: Array<SongData>;
+  selectedSongId: string | null;
+};
+
+type Action = {
+  type: string;
+  payload: any;
+};
 
 const songData = {
-  id: " 1234",
+  id: "1234",
   title: "Cool Song",
   artist: "Sick Artist",
   duration: 888,
@@ -20,45 +55,89 @@ const songData = {
       (_, i) =>
         roundToNearestDecimal(Math.abs(Math.cos(i * (Math.PI / 180))), 2) * 100
     ),
+  isLooping: false,
+  playbackSpeed: 1,
+  isAutoSpeedUpEnabled: false,
+  speedUpIncrement: 0,
+  speedUpRepetitions: 0,
+  isCountInEnabled: false,
+  countInBeats: 0,
+  countInTempo: 0,
 };
-
-const initSongs: Array<SongData> = [songData];
 
 const playerSettings = {
   volume: 0.5,
-  playbackSpeed: 1,
-  isLooping: true,
-  isAutoSpeedUpEnabled: true,
-  speedUpIncrement: 0.25,
-  speedUpRepetitions: 10,
-  isCountInEnabled: false,
-  countInBeats: 2,
-  countInTempo: 180,
+  isPlaying: false,
 };
 
+const musicPlayer = createMusicPlayer(audioFile);
+
 export function App() {
-  const [songs, setSongs] = React.useState(initSongs);
-  const findSong = (id: string) => songs.find((x) => x.id === id) || null;
-  const selectedId = songs[0]?.id || "";
-  const [selectedSong, setSelectedSong] = React.useState(findSong(selectedId));
+  const initState: AppState = {
+    songList: [songData],
+    selectedSongId: "1234",
+  };
+
+  const reducer = (state: AppState, action: Action): AppState => {
+    switch (action.type) {
+      case "addSong":
+        const newSongList = [...state.songList, action.payload];
+        return { ...state, songList: newSongList };
+      case "selectSong":
+        return { ...state, selectedSongId: action.payload };
+      case "updateSong":
+        const songToUpdate = state.songList.find(
+          (x) => x.id === action.payload.id
+        );
+        if (songToUpdate) {
+          const songData = { ...songToUpdate, ...action.payload.songData };
+          const newSongList = state.songList.map((x) => {
+            return x.id === action.payload.id ? { ...x, ...songData } : x;
+          });
+          return { ...state, songList: newSongList };
+        }
+        return state;
+      default:
+        break;
+    }
+    return state;
+  };
+
+  const [state, dispatch] = React.useReducer(reducer, initState);
+
+  React.useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   const addSong = (newSong: SongData) => {
-    setSongs([...songs, newSong]);
+    dispatch({ type: "addSong", payload: newSong });
   };
 
   const selectSong = (id: string) => {
-    setSelectedSong(findSong(id));
+    dispatch({ type: "selectSong", payload: id });
   };
+
+  const updateSong = (id: string, songData: any) => {
+    dispatch({ type: "updateSong", payload: { id, songData } });
+  };
+
+  const selectedSong = state.songList.find(
+    (x) => x.id === state.selectedSongId
+  );
 
   return (
     <div className={styles.shreddo}>
       <SideMenu
-        songs={songs}
-        selectedSong={selectedSong?.id || ""}
+        songs={state.songList}
+        selectedSong={state.selectedSongId || ""}
         addSong={addSong}
         selectSong={selectSong}
       />
-      <SongPlayer songData={selectedSong} playerSettings={playerSettings} />
+      <SongPlayer
+        songData={selectedSong || null}
+        updateSong={updateSong}
+        playerSettings={playerSettings}
+      />
     </div>
   );
 }

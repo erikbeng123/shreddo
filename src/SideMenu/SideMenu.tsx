@@ -2,7 +2,8 @@ import React, { ChangeEvent } from "react";
 import styles from "./SideMenu.module.scss";
 import classnames from "classnames";
 import { Cog } from "./Cog";
-import { SongData } from "../SongPlayer/SongPlayer";
+import * as musicMetadata from "music-metadata-browser";
+import { SongData } from "../App";
 
 export function SideMenu({
   songs,
@@ -15,20 +16,36 @@ export function SideMenu({
   addSong: Function;
   selectSong: Function;
 }) {
-  const handleSongSelect = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSongSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
-      const newSong: SongData = {
-        id: `${songs.length}_wow`,
-        title: file.name,
-        artist: file.name,
-        duration: 1000,
-        sections: [],
-        loopStart: 0,
-        loopEnd: 1000,
-        soundData: [],
-      };
-      addSong(newSong);
+      musicMetadata
+        .parseBlob(file)
+        .then((metaData) => {
+          const newSong: SongData = {
+            id: `${songs.length}_wow`,
+            title: metaData.common.title || file.name,
+            artist: metaData.common.artist || "Unknown",
+            duration: metaData.format.duration || 0,
+            loopStart: 0,
+            loopEnd: metaData.format.duration || 0,
+            sections: [],
+            soundData: [],
+            isLooping: false,
+            playbackSpeed: 0,
+            isAutoSpeedUpEnabled: false,
+            speedUpIncrement: 0,
+            speedUpRepetitions: 0,
+            isCountInEnabled: false,
+            countInBeats: 0,
+            countInTempo: 0,
+          };
+          addSong(newSong);
+        })
+        .catch((e) => {
+          alert("FILE IS NO GO");
+        });
     }
   };
 
